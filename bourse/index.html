@@ -14,12 +14,11 @@
     </nav>
 
 </body>
-
-</html>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
     crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
     crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.js"></script>
 <link rel="stylesheet" href="index.css">
 <!--JS -->
 <script src='lib/jquery-2.1.4.min.js'></script>
@@ -29,10 +28,10 @@
 <script src='app/currency_directive.js'></script>
 <script src='app/currency.js'></script>
 <div class="row">
-    <div id="top_left" class="col" ng-app="currency_search" >
+    <div id="top_left" class="col" ng-app="currency_search">
         <!--TOP LEFT-->
         <h2>Search currency</h2>
-        <div class="input-group mb-3" ng-controller="CurrencyController"id ="currency">
+        <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <button class="btn btn-outline-secondary" type="button">Search</button>
             </div>
@@ -46,15 +45,20 @@
                     <th scope="col">Action</th>
                 </tr>
             </thead>
-            <tbody>
-                <currency/>
+            <tbody ng-controller="CurrencyController" id="currencies">
+                <tr ng-repeat="currency in currencies">
+                    <th class="name" scope="row">{{currency.name}}</th>
+                    <td class="price">{{currency.price}}</td>
+                    <td>
+                        <button type="button" class="btn btn-success">Buy</button>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>
     <!--TOP RIGHT -->
     <div id="top_right" class="col">
         <h2>Cagnotte</h2>
-        <img src="./chart-js-demo.jpg" />
     </div>
     <div class="w-100"></div>
     <!--BOTTOM LEFT-->
@@ -105,3 +109,5 @@
         </ul>
     </div>
 </div>
+
+</html>
