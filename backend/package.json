@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "express": "^4.16.2"
+    "body-parser": "^1.18.2",
+    "connect-redis": "^3.3.3",
+    "express": "^4.16.2",
+    "express-session": "^1.15.6"
   },
   "devDependencies": {},
   "scripts": {
