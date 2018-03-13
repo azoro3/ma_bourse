@@ -42,6 +42,7 @@
                 <thead>
                     <tr>
                         <th scope="col">Label</th>
+                        <th scope="col">Symbol</th>
                         <th scope="col">Price</th>
                         <th scope="col">Action</th>
                     </tr>
@@ -49,9 +50,10 @@
                 <tbody ng-controller="CurrencyController" id="currencies">
                     <tr ng-repeat="currency in currencies | filter :query">
                         <th class="name" scope="row">{{currency.name}}</th>
+                        <th class="name" scope="row">{{currency.symbol}}</th>
                         <td class="price">{{currency.price}}</td>
                         <td>
-                            <button type="button" ng-click="buy()" class="btn btn-success">Buy</button>
+                            <button type="button" ng-click="buy(currency)" class="btn btn-success">Buy</button>
                         </td>
                     </tr>
                 </tbody>
@@ -70,15 +72,19 @@
                     <tr>
                         <th scope="col">Label</th>
                         <th scope="col">Price</th>
+                        <th scope="col">Symbol</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody ng-controller="CartController" id="cart">
                     <tr ng-repeat="action in actions">
-                        <th class="name" scope="row">{{action.name}}</th>
+                        <th class="name" scope="row">
+                                <button type="button" ng-click="getInfo(action)" class="btn btn-success">{{action.name}}</button>
+                        </th>
+                        <th class="name" scope="row">{{action.symbol}}</th>
                         <td class="price">{{action.price}}</td>
                         <td>
-                            <button type="button" ng-click="buy()" class="btn btn-success">Sell</button>
+                            <button type="button" ng-click="sell(action)" class="btn btn-success">Sell</button>
                         </td>
                     </tr>
                 </tbody>
@@ -88,11 +94,6 @@
         <div id="bot_right" class="col">
             <h2>Info</h2>
             <ul class="list-group">
-                <li class="list-group-item">Cras justo odio</li>
-                <li class="list-group-item">Dapibus ac facilisis in</li>
-                <li class="list-group-item">Morbi leo risus</li>
-                <li class="list-group-item">Porta ac consectetur ac</li>
-                <li class="list-group-item">Vestibulum at eros</li>
             </ul>
         </div>
     </div>
