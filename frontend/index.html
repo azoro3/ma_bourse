@@ -73,19 +73,16 @@
                         <th scope="col">Label</th>
                         <th scope="col">Price</th>
                         <th scope="col">Symbol</th>
-                        <th scope="col">Action</th>
+
                     </tr>
                 </thead>
                 <tbody ng-controller="CartController" id="cart">
                     <tr ng-repeat="action in actions">
                         <th class="name" scope="row">
-                                <button type="button" ng-click="getInfo(action)" class="btn btn-success">{{action.name}}</button>
+                            <button type="button" ng-click="getInfo(action)" class="btn btn-success">{{action.name}}</button>
                         </th>
                         <th class="name" scope="row">{{action.symbol}}</th>
                         <td class="price">{{action.price}}</td>
-                        <td>
-                            <button type="button" ng-click="sell(action)" class="btn btn-success">Sell</button>
-                        </td>
                     </tr>
                 </tbody>
             </table>
@@ -93,8 +90,21 @@
         <!--BOTTOM RIGHT -->
         <div id="bot_right" class="col">
             <h2>Info</h2>
-            <ul class="list-group">
-            </ul>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Info</th>
+                        <th scope="col">value</th>
+
+                    </tr>
+                </thead>
+                <tbody ng-controller="CartController" id="portefeuille">
+                    <tr ng-repeat="info in infos">
+                        <th class="name" scope="row">{{info.name}}</th>
+                        <th class="name" scope="row">{{info.value}}</th>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </body>
