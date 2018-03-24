@@ -5,6 +5,8 @@ const db = mongoose.connect('mongodb://localhost:32768/stock')
 const app = express()
 const YahooFinanceAPI = require('yahoo-finance-data');
 var currencies = []
+var infos = []
+var money = 0
 const api = new YahooFinanceAPI({
     key: 'dj0yJmk9SVZLdFJHeEF0MU55JmQ9WVdrOVRUSmhlWHB0TjJVbWNHbzlNQS0tJnM9Y29uc3VtZXJzZWNyZXQmeD0yMA--',
     secret: 'a917dc088aed919c3e9613bc83b341d34f0898ed'
@@ -27,7 +29,7 @@ app.get('/currencies', function (req, res, next) {
     res.statusCode = 200
     api.getRealtimeQuotes('CGGDS.PA,ATA.PA,ACALS.PA,ORA.PA,JXR.PA,FP.PA,CA.PA,SAN.PA,YHOO,MSFT,AAPL').then(
         function (data) {
-            currencies=[]
+            currencies = []
             var tmp = data.query.results.quote
             tmp.forEach(element => {
                 var one = new Stock();
@@ -53,6 +55,8 @@ app.get('/cart', function (req, res, next) {
     })
 })
 app.post('/cart', function (req, res, next) {
+    money = money - req.body.price
+    console.log(money)
     var stock = new Stock(req.body)
     stock.save(function (err) {
         if (err) {
@@ -64,33 +68,48 @@ app.post('/cart', function (req, res, next) {
         }
     })
 })
-app.post('/cartSell', function (req, res, next) {
+app.post('/sell', function (req, res, next) {
     var stock = new Stock(req.body)
-    stock.remove({ name: stock.name }, function (err) {
-        if (!err) {
-            res.statusCode = 200
-        }
-        else {
-            console.log(err)
-        }
+    api.getRealtimeQuotes(stock.symbol).then(function (data) {
+        money = money + Number(data.query.results.quote.LastTradePriceOnly)
+        console.log(money)
+    }).then(function () {
+        stock.remove({ name: stock.name }, function (err) {
+            if (!err) {
+                res.statusCode = 200
+            }
+            else {
+                console.log(err)
+            }
+        })
     })
 })
-app.post('/infos', function (req, res, next){
-    var infos=[]
+app.post('/infos', function (req, res, next) {
+    infos = []
     var name = req.body.name
-    var priceA=req.body.price
-    var priceN=null
-    var theOne=new Object()
-    api.getRealtimeQuotes(req.body.symbol).then(function(data){
+    var priceA = req.body.price
+    var priceN = null
+    var theOne = new Object()
+    api.getRealtimeQuotes(req.body.symbol).then(function (data, next) {
         var tmp = data.query.results.quote
-        priceN =tmp.LastTradePriceOnly
-        theOne.name =name
-        theOne.priceA=priceA
-        theOne.priceN=priceN
+        priceN = tmp.LastTradePriceOnly
+        theOne.name = name
+        infos.push(theOne.name)
+        theOne.priceA = priceA
+        infos.push(theOne.priceA)
+        theOne.priceN = Number(priceN)
+        infos.push(theOne.priceN)
+        theOne.percent = ((priceN - priceA) / priceA) * 100
+        infos.push(theOne.percent)
+    }).then(function () {
+        console.log(infos)
+        res.json(infos)
     })
-    infos.push(theOne)
-    console.log(theOne)
-    res.json(infos)
+
+})
+app.get('/money', function (req, res, next) {
+    console.log(money)
+    res.json(money)
 })
 app.listen(8000, function () {
     console.log('server running and listennin on localhost:8000')
