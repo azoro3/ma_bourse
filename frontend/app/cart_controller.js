@@ -4,10 +4,10 @@ angular.module('currency_search').controller('CartController', ['$scope', '$http
     }, function (error) {
         console.log(error)
     })
-    $scope.value=null
-    $http.get('http://localhost:8000/money').then(function(response){
+    $scope.value = null
+    $http.get('http://localhost:8000/money').then(function (response) {
         console.log(response.data)
-        $scope.value=response.data
+        $scope.value = response.data
     })
     //TODO
     $scope.prouts = null
@@ -16,7 +16,8 @@ angular.module('currency_search').controller('CartController', ['$scope', '$http
         $scope.test = null
         $http.post('http://localhost:8000/infos', JSON.stringify(action)).then(function (response) {
             console.log(response.data)
-            $scope.prouts=response.data
+            $scope.prouts = response.data
+            alert(response.data)
             console.log("test", $scope.test)
         }, function (error) {
             console.log(error)
@@ -32,5 +33,5 @@ angular.module('currency_search').controller('CartController', ['$scope', '$http
         })
         window.location.reload()
     }
-    
+
 }])

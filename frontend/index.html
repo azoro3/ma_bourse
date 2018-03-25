@@ -82,7 +82,9 @@
                 <tbody ng-controller="CartController" id="cart">
                     <tr ng-repeat="action in actions">
                         <th class="name" scope="row">
-                            <button type="button" ng-click="getInfo(action)" class="btn btn-success">{{action.name}}</button>
+                            <button type="button" class="btn btn-outline-secondary" ng-click="getInfo(action)">
+                                {{action.name}}
+                            </button>
                         </th>
                         <th class="name" scope="row">{{action.symbol}}</th>
                         <td class="price">{{action.price}}</td>
@@ -94,21 +96,6 @@
             </table>
         </div>
         <!--BOTTOM RIGHT -->
-        <div id="prout" class="col" ng-controller="CartController">
-            <h2>Info</h2>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th scope="col">Value</th>
-                    </tr>
-                </thead>
-                <tbody ng-controller="CartController" id="cart">
-                    <tr ng-repeat="prout in prouts">
-                        <th class="value" scope="row">{{prout}}</th>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
     </div>
 </body>
 
