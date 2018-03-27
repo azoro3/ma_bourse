@@ -64,6 +64,11 @@
         <div id="top_right" class="col" ng-controller="CartController">
             <h2>Cagnotte</h2>
             <h3>{{ value }}</h3>
+            <span class="row">
+                <div class="text-center">
+                    <canvas id="graphique" width="400%" height="200%"></canvas>
+                </div>
+            </span>
         </div>
         <div class="w-100"></div>
         <!--BOTTOM LEFT-->
@@ -96,6 +101,15 @@
             </table>
         </div>
         <!--BOTTOM RIGHT -->
+        <div id="top_right" class="col" ng-controller="CartController">
+            <h2>Infos</h2>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Name :{{infos.info.name}}</li>
+                <li class="list-group-item">Old price :{{infos.info.priceA}}</li>
+                <li class="list-group-item">New Price{{infos.info.priceN}}</li>
+                <li class="list-group-item">Variation(%) :{{infos.info.percent}}</li>
+            </ul>
+        </div>
     </div>
 </body>
 

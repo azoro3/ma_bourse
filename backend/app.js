@@ -102,7 +102,7 @@ app.post('/infos', function (req, res, next) {
         theOne.percent = ((priceN - priceA) / priceA) * 100
         infos.push(theOne.percent)
     }).then(function () {
-        console.log(infos)
+        console.log(theOne)
         res.json(infos)
     })
 

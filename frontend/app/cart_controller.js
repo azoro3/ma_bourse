@@ -1,4 +1,6 @@
+
 angular.module('currency_search').controller('CartController', ['$scope', '$http', 'Cart', function ($scope, $http, Cart) {
+    var ctx = document.getElementById("graphique")
     $http.get('http://localhost:8000/cart').then(function (response) {
         $scope.actions = response.data
     }, function (error) {
@@ -6,23 +8,38 @@ angular.module('currency_search').controller('CartController', ['$scope', '$http
     })
     $scope.value = null
     $http.get('http://localhost:8000/money').then(function (response) {
-        console.log(response.data)
         $scope.value = response.data
+        var labels = JSON.parse(localStorage.getItem("labels"))
+        var storedData = JSON.parse(localStorage.getItem("values"))
+        storedData.push(response.data)
+        var date = new Date()
+        labels.push("js")
+        localStorage.setItem('values', JSON.stringify(storedData))
+        localStorage.setItem('labels', JSON.stringify(labels))
+        console.log('datat_chart', storedData)
+        var lineChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: storedData
+                }]
+            }
+        })
     })
     //TODO
-    $scope.prouts = null
-    //Ici tu utilise socre donc je pense que tu ne peux pas l'utiliser dans cette partie la en lui donnant un attribut sauf peut etre en passant par thid
     $scope.getInfo = function (action) {
-        $scope.test = null
+        $scope.infos={info:null}
+        var yesy;
         $http.post('http://localhost:8000/infos', JSON.stringify(action)).then(function (response) {
-            console.log(response.data)
-            $scope.prouts = response.data
+            //$scope.infos = response.data
+            yesy = response.data
             alert(response.data)
-            console.log("test", $scope.test)
         }, function (error) {
             console.log(error)
         }).then(function () {
-            console.log('prouts', $scope.prouts)
+            $scope.infos.info = yesy
+            console.log('infos', $scope.infos)
         })
     }
     $scope.sell = function (action) {
